@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head('Página Inicial')}"></head>
+
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container">
+    <div th:replace="~{layout :: alerts}"></div>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold">Sistema de Gestão da Empresa</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">
+                Bem-vindo ao sistema de gerenciamento. Use a barra de navegação acima para acessar as
+                seções de Pessoas, Funcionários e Projetos.
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a th:href="@{/funcionarios}" class="btn btn-primary btn-lg px-4 gap-3">Ver Funcionários</a>
+                <a th:href="@{/projetos}" class="btn btn-outline-secondary btn-lg px-4">Ver Projetos</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

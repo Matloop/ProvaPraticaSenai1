@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head(${projeto.id == null} ? 'Novo Projeto' : 'Editar Projeto')}"></head>
+
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container">
+    <div th:replace="~{layout :: alerts}"></div>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <h1 th:text="${projeto.id == null} ? 'Novo Projeto' : 'Editar Projeto'"></h1>
+    <form th:action="@{/projetos/salvar}" th:object="${projeto}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome do Projeto</label>
+            <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+        </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" th:field="*{descricao}" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="funcionario" class="form-label">Funcionário Responsável</label>
+            <select class="form-select" id="funcionario" th:field="*{funcionarioResponsavel}" required>
+                <option value="">Selecione um funcionário</option>
+                <option th:each="func : ${funcionarios}"
+                        th:value="${func.id}"
+                        th:text="${func.nome} + ' (' + ${func.matricula} + ')'"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a th:href="@{/projetos}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

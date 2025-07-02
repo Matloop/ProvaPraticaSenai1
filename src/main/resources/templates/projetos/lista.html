@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head('Lista de Projetos')}"></head>
+
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container">
+    <div th:replace="~{layout :: alerts}"></div>
+
+    <!-- CONTEÚDO DA PÁGINA -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Lista de Projetos</h1>
+        <a th:href="@{/projetos/novo}" class="btn btn-primary">Novo Projeto</a>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Nome do Projeto</th><th>Descrição</th><th>Responsável</th><th>Ações</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="proj : ${projetos}">
+            <td th:text="${proj.id}"></td>
+            <td th:text="${proj.nome}"></td>
+            <td th:text="${proj.descricao}"></td>
+            <td th:text="${proj.funcionarioResponsavel.nome}"></td>
+            <td>
+                <a th:href="@{/projetos/editar/{id}(id=${proj.id})}" class="btn btn-sm btn-warning">Editar</a>
+                <a th:href="@{/projetos/excluir/{id}(id=${proj.id})}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Tem certeza que deseja excluir este projeto?');">Excluir</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(projetos)}">
+            <td colspan="5" class="text-center">Nenhum projeto cadastrado.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>
