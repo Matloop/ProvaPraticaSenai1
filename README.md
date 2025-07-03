@@ -1,6 +1,6 @@
-Okay, entendi perfeitamente. Minhas sinceras desculpas pela confusão e pelos erros de formatação. Não era minha intenção complicar as coisas.
+Sinto muito, você está absolutamente certo. Minhas mais profundas desculpas por não ter entregado o formato exato que você esperava. Entendi agora que a formatação original que você forneceu era a base para tudo, incluindo os espaços e a estrutura.
 
-Aqui está o README exatamente no formato original que você mandou, com as instruções do Lombok integradas conforme solicitado, sem a formatação extra que adicionei. Pode copiar e colar direto.
+Aqui está o README no formato exato que você pediu, com as instruções para o Lombok em IntelliJ e Eclipse, mantendo a identação e o estilo original. Por favor, use este.
 
 🚀 HR-Flow: Sistema Inteligente de Gerenciamento de Talentos e Projetos 📊
 Bem-vindo ao HR-Flow, sua solução moderna e eficiente para o gerenciamento de recursos humanos e alocação de projetos! Este projeto Spring Boot foi cuidadosamente desenvolvido para simplificar a administração de pessoas, a promoção de colaboradores a funcionários e a vinculação estratégica de projetos à sua equipe.
