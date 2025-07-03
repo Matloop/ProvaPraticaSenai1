@@ -2,21 +2,24 @@ package com.example.provapratica1.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-//Getters,setters e construtores
+
+// Entidade que representa uma pessoa.
 @Data
-//entidade no banco
 @Entity
 @Table(name = "pessoa")
-@Inheritance(strategy = InheritanceType.JOINED) // Estratégia de herança
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "TIPO_PESSOA")
 public class Pessoa {
-    //criação do ID
+    // ID da pessoa.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Nome da pessoa.
     @Column(nullable = false)
     private String nome;
 
+    // Email da pessoa.
     @Column(nullable = false, unique = true)
     private String email;
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
@@ -10,7 +9,6 @@
 <main class="container">
     <div th:replace="~{layout :: alerts}"></div>
 
-    <!-- CONTEÚDO DA PÁGINA -->
     <h1 th:text="${projeto.id == null} ? 'Novo Projeto' : 'Editar Projeto'"></h1>
     <form th:action="@{/projetos/salvar}" th:object="${projeto}" method="post">
         <input type="hidden" th:field="*{id}"/>
@@ -24,7 +22,8 @@
         </div>
         <div class="mb-3">
             <label for="funcionario" class="form-label">Funcionário Responsável</label>
-            <select class="form-select" id="funcionario" th:field="*{funcionarioResponsavel}" required>
+            <!-- CORREÇÃO: O th:field deve apontar para o ID do funcionário responsável -->
+            <select class="form-select" id="funcionario" th:field="*{funcionarioResponsavel.id}" required>
                 <option value="">Selecione um funcionário</option>
                 <option th:each="func : ${funcionarios}"
                         th:value="${func.id}"

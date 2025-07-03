@@ -9,7 +9,6 @@
 <main class="container">
     <div th:replace="~{layout :: alerts}"></div>
 
-    <!-- CONTEÚDO DA PÁGINA -->
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>Lista de Projetos</h1>
         <a th:href="@{/projetos/novo}" class="btn btn-primary">Novo Projeto</a>
@@ -25,6 +24,7 @@
             <td th:text="${proj.descricao}"></td>
             <td th:text="${proj.funcionarioResponsavel.nome}"></td>
             <td>
+                <!-- Este link está correto -->
                 <a th:href="@{/projetos/editar/{id}(id=${proj.id})}" class="btn btn-sm btn-warning">Editar</a>
                 <a th:href="@{/projetos/excluir/{id}(id=${proj.id})}" class="btn btn-sm btn-danger"
                    onclick="return confirm('Tem certeza que deseja excluir este projeto?');">Excluir</a>

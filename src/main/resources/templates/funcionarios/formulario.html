@@ -1,39 +1,80 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="~{layout :: head(${funcionario.id == null} ? 'Novo Funcionário' : 'Editar Funcionário')}"></head>
-
+<head th:replace="~{layout :: head('Gerenciar Funcionário')}"></head>
 <body>
 <nav th:replace="~{layout :: navbar}"></nav>
-
 <main class="container">
     <div th:replace="~{layout :: alerts}"></div>
 
-    <!-- CONTEÚDO DA PÁGINA -->
-    <h1 th:text="${funcionario.id == null} ? 'Novo Funcionário' : 'Editar Funcionário'"></h1>
-    <form th:action="@{/funcionarios/salvar}" th:object="${funcionario}" method="post">
-        <input type="hidden" th:field="*{id}"/>
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome Completo</label>
-            <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" required>
-        </div>
-        <div class="mb-3">
-            <label for="matricula" class="form-label">Matrícula</label>
-            <input type="text" class="form-control" id="matricula" th:field="*{matricula}" placeholder="Ex: F007" required>
-        </div>
-        <div class="mb-3">
-            <label for="departamento" class="form-label">Departamento</label>
-            <input type="text" class="form-control" id="departamento" th:field="*{departamento}" placeholder="Ex: TI, RH..." required>
-        </div>
-        <button type="submit" class="btn btn-success">Salvar</button>
-        <a th:href="@{/funcionarios}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</main>
+    <!-- ================================================================= -->
+    <!-- MODO CRIAÇÃO: Este bloco só aparece se o controller enviar um 'funcionarioDto' -->
+    <!-- ================================================================= -->
+    <th:block th:if="${funcionarioDto != null}">
+        <h1>Cadastrar Novo Funcionário</h1>
+        <p class="text-muted">Selecione uma pessoa cadastrada para promovê-la a funcionário.</p>
 
+        <form th:action="@{/funcionarios/criar}" th:object="${funcionarioDto}" method="post">
+
+            <!-- REGRA 1: Campo de seleção para escolher uma Pessoa existente -->
+            <div class="mb-3">
+                <label for="pessoa" class="form-label">Pessoa a ser promovida</label>
+                <select class="form-select" id="pessoa" th:field="*{idPessoa}" required>
+                    <option value="" disabled selected>-- Escolha uma pessoa da lista --</option>
+                    <option th:each="p : ${pessoasDisponiveis}"
+                            th:value="${p.id}"
+                            th:text="${p.nome + ' (' + p.email + ')'}"></option>
+                </select>
+                <div th:if="${#lists.isEmpty(pessoasDisponiveis)}" class="form-text text-danger">
+                    Não há pessoas disponíveis. <a th:href="@{/pessoas/novo}">Cadastre uma nova pessoa primeiro.</a>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="matricula-novo" class="form-label">Matrícula</label>
+                <input type="text" class="form-control" id="matricula-novo" th:field="*{matricula}" placeholder="Ex: F007" pattern="F\d{3}" title="A matrícula deve seguir o formato 'F' seguido de três números." required>
+            </div>
+
+            <div class="mb-3">
+                <label for="departamento-novo" class="form-label">Departamento</label>
+                <input type="text" class="form-control" id="departamento-novo" th:field="*{departamento}" placeholder="Ex: TI, RH..." required>
+            </div>
+
+            <button type="submit" class="btn btn-success" th:disabled="${#lists.isEmpty(pessoasDisponiveis)}">Cadastrar Funcionário</button>
+            <a th:href="@{/funcionarios}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </th:block>
+
+    <!-- ================================================================== -->
+    <!-- MODO EDIÇÃO: Este bloco só aparece se o controller enviar um 'funcionario' -->
+    <!-- ================================================================== -->
+    <th:block th:if="${funcionario != null}">
+        <h1>Editar Funcionário</h1>
+
+        <form th:action="@{/funcionarios/atualizar}" th:object="${funcionario}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome Completo</label>
+                <input type="text" class="form-control" id="nome" th:field="*{nome}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="matricula-edit" class="form-label">Matrícula (Ex: F123)</label>
+                <input type="text" class="form-control" id="matricula-edit" th:field="*{matricula}" pattern="F\d{3}" title="A matrícula deve seguir o formato 'F' seguido de três números (ex: F007)." required>
+            </div>
+            <div class="mb-3">
+                <label for="departamento-edit" class="form-label">Departamento</label>
+                <input type="text" class="form-control" id="departamento-edit" th:field="*{departamento}" placeholder="Ex: TI, RH..." required>
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar Alterações</button>
+            <a th:href="@{/funcionarios}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </th:block>
+</main>
 <footer th:replace="~{layout :: footer}"></footer>
 </body>
 </html>
