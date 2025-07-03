@@ -1,5 +1,4 @@
-``````java
-        package com.example.provapratica1.service;
+package com.example.provapratica1.service;
 
 
 import com.example.provapratica1.entity.Projeto;
